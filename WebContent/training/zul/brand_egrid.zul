@@ -11,7 +11,7 @@
 						visible="false" width="350px" height="190px">
 						<vlayout width="100%" height="100%">
 							<qgrid id="qgrid" vflex="1">
-								<columns sizable="true">
+								<columns>
 									<column width="30%" />
 									<column width="70%" />
 								</columns>
