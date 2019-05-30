@@ -7,7 +7,7 @@
 			<basebutton id="queryBtn" mode="query"/>
 
 			<window id="queryWin" mlkey="baselib.btn.query"
-				visible="false" width="310px" height="165px" position="right,bottom">
+				visible="false" width="310px" height="165px">
 				<vlayout width="100%" height="100%">
 					<qgrid id="qgrid" vflex="1">
 						<columns sizable="true">
