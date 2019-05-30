@@ -1,5 +1,6 @@
 /bin/
 /WebContent/WEB-INF/*
+!/WebContent/WEB-INF/*.properties
 /WebContent/META-INF/*
 .project
 .settings

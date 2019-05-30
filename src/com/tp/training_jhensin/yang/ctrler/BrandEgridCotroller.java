@@ -1,11 +1,15 @@
 package com.tp.training_jhensin.yang.ctrler;
 
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 
 import com.tp.baselib.model.MapBean;
 import com.tp.baselib.model.MapBeanResultList;
+import com.tp.baselib.util.Multilingual;
 import com.tp.baselib.zul.Egrid;
+import com.tp.baselib.zul.InputsContainer.EditEvent;
 import com.tp.baselib.zul.ListModelList;
 import com.tp.baselib.zul.Listbox;
 import com.tp.baselib.zul.Listitem;
@@ -34,16 +38,14 @@ public class BrandEgridCotroller extends TrainingBaseComposer {
 
 	@Override
 	public boolean onQuery(MapBean bean) throws Exception {
-		String BName = bean.get("BRAND_NAME");
-		String BNo = bean.get("BRAND_NO");
-		// System.out.println(BName);
-		// System.out.println(BNo);
-		if (BName.isEmpty() || BNo.isEmpty()) {
+		String brandName = bean.get("BRAND_NAME");
+		String brandNo = bean.get("BRAND_NO");
+		if (brandName.isEmpty() || brandNo.isEmpty()) {
 			MapBeanResultList data = TPDAOFactory.getWtBrandDAO().queryAll();
 			this.indexLbox.setModel(new ListModelList<>(data));
-			return false;
+			return true;
 		} else {
-			MapBeanResultList data = TPDAOFactory.getWtBrandDAO().queryNameNo(BName, BNo);
+			MapBeanResultList data = TPDAOFactory.getWtBrandDAO().queryNameNo(brandName, brandNo);
 			this.indexLbox.setModel(new ListModelList<>(data));
 			return true;
 		}
@@ -60,6 +62,24 @@ public class BrandEgridCotroller extends TrainingBaseComposer {
 
 		public MasterActionHandler() {
 			super(TPDAOFactory.getWtBrandDAO(), false);
+		}
+
+		@Override
+		protected String[][] getUkColNames() {
+			return new String[][] { { "BRAND_NO" }, { "BRAND_CODE" } };
+		}
+
+		@Override
+		public void onBeforeSave(EditEvent event) throws Exception {
+			super.onBeforeSave(event);
+			Egrid grid = this.getEgrid();
+			MapBean bean = grid.getBean();
+			String brandCode = bean.get("BRAND_CODE");
+
+			if(!brandCode.matches("[A-Za-z0-9]{2}")) {
+				Component comp = grid.getChildByFld("BRAND_CODE");
+				throw new WrongValueException(comp, Multilingual.getByUserLocale("jhensin.msg.checkInputboandcode", true, true));
+			}
 		}
 	}
 }

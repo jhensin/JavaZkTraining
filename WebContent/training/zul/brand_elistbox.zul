@@ -21,7 +21,7 @@
 							</row>
 							<row>
 								<coltitle
-									mlkey="jhensin.label.brandname" />
+									mlkey="jhensin.label.brandName" />
 								<textbox fld="BRAND_NAME" constraint="no empty"/>
 							</row>
 						</rows>
@@ -43,11 +43,11 @@
 					<listheader width="100px" sort="auto( BRAND_NO )"
 						mlkey="jhensin.label.brandNo" />
 					<listheader width="100px" sort="auto( BRAND_CODE )"
-						mlkey="jhensin.label.brandbrcode" />
+						mlkey="jhensin.label.brandBrcode" />
 					<listheader width="100px" sort="auto( BRAND_NAME )"
-						mlkey="jhensin.label.brandname" />
+						mlkey="jhensin.label.brandName" />
 					<listheader width="100px" sort="auto( IS_VIP )"
-						mlkey="jhensin.label.brandisvip" />
+						mlkey="jhensin.label.brandIsvip" />
 					<listheader width="50px" sort="auto( CREATE_BY )"
 						mlkey="baselib.col.creator" />
 					<listheader width="115px" sort="auto( CREATE_DATE )"

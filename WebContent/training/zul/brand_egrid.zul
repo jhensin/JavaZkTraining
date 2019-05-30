@@ -23,8 +23,8 @@
 									</row>
 									<row>
 										<coltitle
-											mlkey="jhensin.label.brandname" />
-										<textbox fld="BRAND_NAME" upper="true"/>
+											mlkey="jhensin.label.brandName" />
+										<textbox fld="BRAND_NAME"/>
 									</row>
 								</rows>
 							</qgrid>
@@ -80,19 +80,19 @@
 									<textbox fld="BRAND_NO" insertOnly="true" requiredForBean="true"/>
 
 									<coltitle
-										mlkey="jhensin.label.brandbrcode" />
-									<textbox fld="BRAND_CODE" insertOnly="true" requiredForBean="true" constraint="/[a-zA-Z\d]{2}/:請輸入英數字二位" />
+										mlkey="jhensin.label.brandBrcode" />
+									<textbox fld="BRAND_CODE" insertOnly="true" requiredForBean="true" />
 								</row>
 								<row>
 									<coltitle
-										mlkey="jhensin.label.brandname" />
+										mlkey="jhensin.label.brandName" />
 									<cell colspan="3">
 										<textbox fld="BRAND_NAME" ></textbox>
 									</cell>
 								</row>
 								<row>
 									<coltitle
-										mlkey="jhensin.label.brandisvip" />
+										mlkey="jhensin.label.brandIsvip" />
 									<cell colspan="3">
 										<checkbox fld="IS_VIP"></checkbox>
 									</cell>
