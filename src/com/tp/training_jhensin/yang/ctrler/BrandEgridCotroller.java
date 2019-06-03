@@ -9,6 +9,7 @@ import com.tp.baselib.model.MapBean;
 import com.tp.baselib.model.MapBeanResultList;
 import com.tp.baselib.util.Multilingual;
 import com.tp.baselib.zul.Egrid;
+import com.tp.baselib.zul.Elistbox;
 import com.tp.baselib.zul.InputsContainer.EditEvent;
 import com.tp.baselib.zul.ListModelList;
 import com.tp.baselib.zul.Listbox;
@@ -16,6 +17,7 @@ import com.tp.baselib.zul.Listitem;
 import com.tp.baselib.zul.Window;
 import com.tp.training_jhensin.yang.dao.TPDAOFactory;
 import com.tp.training_jhensin.yang.zul.TrainingBaseComposer;
+import com.tp.training_jhensin.yang.zul.TrainingGeneralElistboxActionHandler;
 import com.tp.training_jhensin.yang.zul.TrainingGeneralListboxAndEgridActionHandler;
 
 public class BrandEgridCotroller extends TrainingBaseComposer {
@@ -24,12 +26,16 @@ public class BrandEgridCotroller extends TrainingBaseComposer {
 	private Listbox indexLbox;
 	@Wire
 	private Egrid masterGrid;
+	@Wire
+	private Elistbox seasonLbox;
 
 	@Override
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
 
 		this.masterGrid.setActionHandler(new MasterActionHandler());
+		this.seasonLbox.setActionHandler(new SeasonActionHandler());
+
 		super.doQuery(); // 預設帶出資料，若不需要，可不寫
 
 		// MapBeanResultList data = TPDAOFactory.getWtBrandDAO().queryAll();
@@ -56,6 +62,10 @@ public class BrandEgridCotroller extends TrainingBaseComposer {
 		Listitem focusedItem = this.indexLbox.getFocusedItem();
 		MapBean bean = focusedItem.getValue();
 		this.masterGrid.setBean(bean); // 將資料帶入至右邊的 Egrid
+
+		String masterId = bean.get("BRAND_ID");
+		MapBeanResultList detailData = TPDAOFactory.getWtBrandSeasonDao().getBySeasonFkBrandNo(masterId);
+		this.seasonLbox.setModel(new ListModelList<>(detailData));
 	}
 
 	private class MasterActionHandler extends TrainingGeneralListboxAndEgridActionHandler {
@@ -76,10 +86,26 @@ public class BrandEgridCotroller extends TrainingBaseComposer {
 			MapBean bean = grid.getBean();
 			String brandCode = bean.get("BRAND_CODE");
 
-			if(!brandCode.matches("[A-Za-z0-9]{2}")) {
+			if (!brandCode.matches("[A-Z0-9]{2}")) {
 				Component comp = grid.getChildByFld("BRAND_CODE");
-				throw new WrongValueException(comp, Multilingual.getByUserLocale("jhensin.msg.checkInputboandcode", true, true));
+				throw new WrongValueException(comp,
+						Multilingual.getByUserLocale("jhensin.msg.checkInputboandcode", true, true));
 			}
+		}
+	}
+
+	private class SeasonActionHandler extends TrainingGeneralElistboxActionHandler {
+
+		public SeasonActionHandler() {
+			super(TPDAOFactory.getWtBrandSeasonDao(), false);
+		}
+
+		@Override
+		protected void initNewBean(MapBean bean, EditEvent event) throws Exception {
+			// 這裡可用來對新增的 bean 給初始值
+			MapBean masterBean = this.getMasterFocusedBean();
+			String masterId = masterBean.get("BRAND_ID");
+			bean.put("BRAND_ID", masterId); // 通常初始就會給主檔ID，以便 UK 檢查
 		}
 	}
 }

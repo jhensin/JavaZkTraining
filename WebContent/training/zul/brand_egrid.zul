@@ -19,12 +19,13 @@
 									<row>
 										<coltitle
 											mlkey="jhensin.label.brandNo" />
-										<textbox fld="BRAND_NO" upper="true"/>
+										<textbox fld="BRAND_NO"
+											upper="true" />
 									</row>
 									<row>
 										<coltitle
 											mlkey="jhensin.label.brandName" />
-										<textbox fld="BRAND_NAME"/>
+										<textbox fld="BRAND_NAME" />
 									</row>
 								</rows>
 							</qgrid>
@@ -77,17 +78,19 @@
 								<row>
 									<coltitle
 										mlkey="jhensin.label.brandNo" />
-									<textbox fld="BRAND_NO" insertOnly="true" requiredForBean="true"/>
+									<textbox fld="BRAND_NO"
+										insertOnly="true" requiredForBean="true" />
 
 									<coltitle
 										mlkey="jhensin.label.brandBrcode" />
-									<textbox fld="BRAND_CODE" insertOnly="true" requiredForBean="true" />
+									<textbox fld="BRAND_CODE"
+										insertOnly="true" requiredForBean="true" />
 								</row>
 								<row>
 									<coltitle
 										mlkey="jhensin.label.brandName" />
 									<cell colspan="3">
-										<textbox fld="BRAND_NAME" ></textbox>
+										<textbox fld="BRAND_NAME"></textbox>
 									</cell>
 								</row>
 								<row>
@@ -115,6 +118,73 @@
 								</row>
 							</rows>
 						</egrid>
+					</panelchildren>
+				</panel>
+				<panel>
+					<caption>
+						<label mlkey="jhensin.label.brandSeason"
+							multiline="true" />
+						<editbuttons id="seasonEbtns" btns="AMDSC"></editbuttons>
+					</caption>
+					<panelchildren>
+						<elistbox id="seasonLbox"
+							boundBtns="${seasonEbtns}" span="true" multiple="true"
+							checkmark="true" showRowNum="true" height="auto"
+							master="${masterGrid}">
+							<listhead>
+								<listheader width="40px" />
+								<listheader width="100px"
+									sort="auto( SEASON_NO )" mlkey="jhensin.label.brandSeason" />
+								<listheader width="100px"
+									sort="auto( SEASON_DESC )" mlkey="jhensin.label.seasonDesc" />
+								<listheader width="50px"
+									sort="auto( MONTH_START )" mlkey="jhensin.label.monthStart" />
+								<listheader width="50px"
+									sort="auto( MONTH_END )" mlkey="jhensin.label.monthEnd" />
+								<listheader width="50px"
+									sort="auto( INVALID_DATE )" mlkey="jhensin.label.invalidDate" />
+								<listheader width="50px"
+									sort="auto( CREATE_BY )" mlkey="baselib.col.creator" />
+								<listheader width="105px"
+									sort="auto( CREATE_DATE )" mlkey="baselib.col.createDate" />
+								<listheader width="50px"
+									sort="auto( MODIFY_BY )" mlkey="baselib.col.modifier" />
+								<listheader width="105px"
+									sort="auto( MODIFY_DATE )" mlkey="baselib.col.modifyDate" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell />
+									<listcell>
+										<textbox fld="SEASON_NO" />
+									</listcell>
+									<listcell>
+										<textbox fld="SEASON_DESC" />
+									</listcell>
+									<listcell>
+										<spinner fld="MONTH_START" constraint="no empty,min 1 max 12"/>
+									</listcell>	
+									<listcell>
+										<spinner fld="MONTH_END" constraint="no empty,min 1 max 12"/>
+									</listcell>	
+									<listcell>
+										<datebox fld="INVALID_DATE" />
+									</listcell>	
+									<listcell>
+										<userlabel fld="CREATE_BY" />
+									</listcell>
+									<listcell>
+										<label fld="CREATE_DATE" />
+									</listcell>
+									<listcell>
+										<userlabel fld="MODIFY_BY" />
+									</listcell>
+									<listcell>
+										<label fld="MODIFY_DATE" />
+									</listcell>
+								</listitem>
+							</template>
+						</elistbox>
 					</panelchildren>
 				</panel>
 			</div>
