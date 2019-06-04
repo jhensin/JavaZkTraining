@@ -156,7 +156,7 @@
 								<listitem>
 									<listcell />
 									<listcell>
-										<textbox fld="SEASON_NO" />
+										<textbox fld="SEASON_NO" upper="true" requiredForBean="true" />
 									</listcell>
 									<listcell>
 										<textbox fld="SEASON_DESC" />

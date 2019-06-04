@@ -11,7 +11,7 @@ public class BrandSeasonDAO extends TrainingDBDAO {
 	}
 
 	public MapBeanResultList getBySeasonFkBrandNo(String QT) throws SQLException {
-		return super.queryMapBeanResultList("SELECT * FROM " + this.getMainTableName() + " WHERE BRAND_ID=?", QT);
+		return super.queryMapBeanResultList("SELECT * FROM " + this.getMainTableName() + " WHERE BRAND_ID=? ORDER BY SEASON_NO DESC", QT);
 	}
 
 	public MapBeanResultList queryAll() throws SQLException {

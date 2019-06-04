@@ -7,6 +7,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 
 import com.tp.baselib.model.MapBean;
 import com.tp.baselib.model.MapBeanResultList;
+import com.tp.baselib.util.Msgbox;
 import com.tp.baselib.util.Multilingual;
 import com.tp.baselib.zul.Egrid;
 import com.tp.baselib.zul.Elistbox;
@@ -21,6 +22,8 @@ import com.tp.training_jhensin.yang.zul.TrainingGeneralElistboxActionHandler;
 import com.tp.training_jhensin.yang.zul.TrainingGeneralListboxAndEgridActionHandler;
 
 public class BrandEgridCotroller extends TrainingBaseComposer {
+
+	private String mainBrandID;
 
 	@Wire
 	private Listbox indexLbox;
@@ -63,8 +66,8 @@ public class BrandEgridCotroller extends TrainingBaseComposer {
 		MapBean bean = focusedItem.getValue();
 		this.masterGrid.setBean(bean); // 將資料帶入至右邊的 Egrid
 
-		String masterId = bean.get("BRAND_ID");
-		MapBeanResultList detailData = TPDAOFactory.getWtBrandSeasonDao().getBySeasonFkBrandNo(masterId);
+		this.mainBrandID = bean.get("BRAND_ID");
+		MapBeanResultList detailData = TPDAOFactory.getWtBrandSeasonDao().getBySeasonFkBrandNo(this.mainBrandID);
 		this.seasonLbox.setModel(new ListModelList<>(detailData));
 	}
 
@@ -92,6 +95,18 @@ public class BrandEgridCotroller extends TrainingBaseComposer {
 						Multilingual.getByUserLocale("jhensin.msg.checkInputboandcode", true, true));
 			}
 		}
+		@Override
+		public void onBeforeDelete (EditEvent event) throws Exception {
+			super.onBeforeDelete(event);
+			//System.out.print(BrandEgridCotroller.this.mainBrandID);
+			MapBeanResultList detailData = TPDAOFactory.getWtBrandSeasonDao().getBySeasonFkBrandNo(BrandEgridCotroller.this.mainBrandID);
+			if(detailData.size() > 0) {
+				Msgbox.warn (Multilingual.getByUserLocale("jhensin.msg.hasDetailError", true, true));
+				this.stop();
+				return;
+			}
+
+		}
 	}
 
 	private class SeasonActionHandler extends TrainingGeneralElistboxActionHandler {
@@ -106,6 +121,11 @@ public class BrandEgridCotroller extends TrainingBaseComposer {
 			MapBean masterBean = this.getMasterFocusedBean();
 			String masterId = masterBean.get("BRAND_ID");
 			bean.put("BRAND_ID", masterId); // 通常初始就會給主檔ID，以便 UK 檢查
+		}
+
+		@Override
+		protected String[][] getUkColNames() {
+			return new String[][] { { "BRAND_ID","SEASON_NO" } };
 		}
 	}
 }
