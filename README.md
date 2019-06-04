@@ -20,7 +20,7 @@
 
 ### 2019/06/04(作業9完成)
 1. 多國語系檔新增定義(jhensin.msg.checkInputboandcode,jhensin.msg.hasDetailError)
-2。  當有明細時，不可刪除主檔
+2. 當有明細時，不可刪除主檔
 3. 資料來源請按季度排序(升冪)
 4. 明細欄位季度：固定大寫
 5. 明細加上加上一個 UK 管控(BRAND_ID + SEASON_NO)
