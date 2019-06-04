@@ -25,3 +25,13 @@
 4. 明細欄位季度：固定大寫
 5. 明細加上加上一個 UK 管控(BRAND_ID + SEASON_NO)
 6. 明細月份起迄兩欄，請用 spinner 元件，並加 constraint 控制只能輸入 1 ~ 12
+
+### 2019/06/04(作業10完成)
+1. 排版：主明細各佔一半高度，並讓 Elistbox 可出現垂直 Scrollbar
+2. 加上兩個 UK 管控：BRAND_NO,BRAND_CODE
+3. 存檔前，檢查 BRAND_CODE 必須是 2 碼英數字
+4. 當有明細時，不可刪除主檔
+5. 明細 資料來源請按季度排序(升冪)
+6. 季度：固定大寫
+7. 加上一個 UK 管控： BRAND_ID + SEASON_NO
+8. 月份起迄兩欄，請用 spinner 元件，並加 constraint 控制只能輸入 1 ~ 12

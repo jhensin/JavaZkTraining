@@ -1,92 +1,172 @@
 <?page contentType="text/html;charset=UTF-8"?>
 <window id="mainWin" width="100%" height="100%"
 	apply="com.tp.training_jhensin.yang.ctrler.BrandElistboxController">
-	<panel height="100%">
-		<caption>
-			<label mlkey="jhensin.label.brandNo" multiline="true" />
-			<basebutton id="queryBtn" mode="query"/>
+	<div vflex="1" style=" overflow-y:auto; ">
+		<panel>
+			<caption>
+				<label mlkey="jhensin.label.brandNo" multiline="true" />
+				<basebutton id="queryBtn" mode="query" />
 
-			<window id="queryWin" mlkey="baselib.btn.query"
-				visible="false" width="310px" height="165px">
-				<vlayout width="100%" height="100%">
-					<qgrid id="qgrid" vflex="1">
-						<columns>
-							<column width="30%" />
-							<column width="70%" />
-						</columns>
-						<rows>
-							<row>
-								<coltitle mlkey="jhensin.label.brandNo" />
-								<textbox fld="BRAND_NO" constraint="no empty"/>
-							</row>
-							<row>
-								<coltitle
-									mlkey="jhensin.label.brandName" />
-								<textbox fld="BRAND_NAME" constraint="no empty"/>
-							</row>
-						</rows>
-					</qgrid>
-					<div align="center">
-						<basebutton id="cancelQueryBtn" mode="cancel" />
-						<basebutton id="confirmQueryBtn" mode="ok" />
-					</div>
-				</vlayout>
-			</window>
-			<editbuttons id="masterEbtns" btns="AMDSC"></editbuttons>
-		</caption>
-		<panelchildren>
-			<elistbox id="masterLbox" boundBtns="${masterEbtns}"
-				span="true" multiple="true" checkmark="true" showRowNum="true"
-				height="100%" mold="paging" pageSize="4">
-				<listhead>
-					<listheader width="40px" />
-					<listheader width="100px" sort="auto( BRAND_NO )"
-						mlkey="jhensin.label.brandNo" />
-					<listheader width="100px" sort="auto( BRAND_CODE )"
-						mlkey="jhensin.label.brandBrcode" />
-					<listheader width="100px" sort="auto( BRAND_NAME )"
-						mlkey="jhensin.label.brandName" />
-					<listheader width="100px" sort="auto( IS_VIP )"
-						mlkey="jhensin.label.brandIsvip" />
-					<listheader width="50px" sort="auto( CREATE_BY )"
-						mlkey="baselib.col.creator" />
-					<listheader width="115px" sort="auto( CREATE_DATE )"
-						mlkey="baselib.col.createDate" />
-					<listheader width="50px" sort="auto( MODIFY_BY )"
-						mlkey="baselib.col.modifier" />
-					<listheader width="115px" sort="auto( MODIFY_DATE )"
-						mlkey="baselib.col.modifyDate" />
-				</listhead>
-				<template name="model">
-					<listitem>
-						<listcell />
-						<listcell>
-							<textbox fld="BRAND_NO" insertOnly="true" requiredForBean="true" upper="true"/>
-						</listcell>
-						<listcell>
-							<textbox fld="BRAND_CODE" insertOnly="true" requiredForBean="true" maxlength="2" upper="true"/>
-						</listcell>
-						<listcell>
-							<textbox fld="BRAND_NAME" />
-						</listcell>
-						<listcell>
-							<checkbox fld="IS_VIP" />
-						</listcell>
-						<listcell>
-							<userlabel fld="CREATE_BY" />
-						</listcell>
-						<listcell>
-							<label fld="CREATE_DATE" />
-						</listcell>
-						<listcell>
-							<userlabel fld="MODIFY_BY" />
-						</listcell>
-						<listcell>
-							<label fld="MODIFY_DATE" />
-						</listcell>
-					</listitem>
-				</template>
-			</elistbox>
-		</panelchildren>
-	</panel>
+				<window id="queryWin" mlkey="baselib.btn.query"
+					visible="false" width="310px" height="165px">
+					<vlayout width="100%" height="100%">
+						<qgrid id="qgrid" vflex="1">
+							<columns>
+								<column width="30%" />
+								<column width="70%" />
+							</columns>
+							<rows>
+								<row>
+									<coltitle
+										mlkey="jhensin.label.brandNo" />
+									<textbox fld="BRAND_NO"
+										constraint="no empty" />
+								</row>
+								<row>
+									<coltitle
+										mlkey="jhensin.label.brandName" />
+									<textbox fld="BRAND_NAME"
+										constraint="no empty" />
+								</row>
+							</rows>
+						</qgrid>
+						<div align="center">
+							<basebutton id="cancelQueryBtn"
+								mode="cancel" />
+							<basebutton id="confirmQueryBtn" mode="ok" />
+						</div>
+					</vlayout>
+				</window>
+				<editbuttons id="masterEbtns" btns="AMDSC"></editbuttons>
+			</caption>
+			<panelchildren>
+				<elistbox id="masterLbox" boundBtns="${masterEbtns}"
+					span="true" multiple="true" checkmark="true" showRowNum="true"
+					height="100%">
+					<listhead>
+						<listheader width="40px" />
+						<listheader width="100px"
+							sort="auto( BRAND_NO )" mlkey="jhensin.label.brandNo" />
+						<listheader width="100px"
+							sort="auto( BRAND_CODE )" mlkey="jhensin.label.brandBrcode" />
+						<listheader width="100px"
+							sort="auto( BRAND_NAME )" mlkey="jhensin.label.brandName" />
+						<listheader width="100px" sort="auto( IS_VIP )"
+							mlkey="jhensin.label.brandIsvip" />
+						<listheader width="50px"
+							sort="auto( CREATE_BY )" mlkey="baselib.col.creator" />
+						<listheader width="115px"
+							sort="auto( CREATE_DATE )" mlkey="baselib.col.createDate" />
+						<listheader width="50px"
+							sort="auto( MODIFY_BY )" mlkey="baselib.col.modifier" />
+						<listheader width="115px"
+							sort="auto( MODIFY_DATE )" mlkey="baselib.col.modifyDate" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell />
+							<listcell>
+								<textbox fld="BRAND_NO"
+									insertOnly="true" requiredForBean="true" upper="true" />
+							</listcell>
+							<listcell>
+								<textbox fld="BRAND_CODE"
+									insertOnly="true" requiredForBean="true" maxlength="2"
+									upper="true" />
+							</listcell>
+							<listcell>
+								<textbox fld="BRAND_NAME" />
+							</listcell>
+							<listcell>
+								<checkbox fld="IS_VIP" />
+							</listcell>
+							<listcell>
+								<userlabel fld="CREATE_BY" />
+							</listcell>
+							<listcell>
+								<label fld="CREATE_DATE" />
+							</listcell>
+							<listcell>
+								<userlabel fld="MODIFY_BY" />
+							</listcell>
+							<listcell>
+								<label fld="MODIFY_DATE" />
+							</listcell>
+						</listitem>
+					</template>
+				</elistbox>
+			</panelchildren>
+		</panel>
+	</div>
+	<div vflex="1" style=" overflow-y:auto; ">
+		<panel>
+			<caption>
+				<label mlkey="jhensin.label.brandSeason"
+					multiline="true" />
+				<editbuttons id="seasonEbtns" btns="AMDSC"></editbuttons>
+			</caption>
+			<panelchildren>
+				<elistbox id="seasonLbox" boundBtns="${seasonEbtns}"
+					span="true" multiple="true" checkmark="true" showRowNum="true"
+					height="auto" master="${masterLbox}">
+					<listhead>
+						<listheader width="40px" />
+						<listheader width="100px"
+							sort="auto( SEASON_NO )" mlkey="jhensin.label.brandSeason" />
+						<listheader width="100px"
+							sort="auto( SEASON_DESC )" mlkey="jhensin.label.seasonDesc" />
+						<listheader width="50px"
+							sort="auto( MONTH_START )" mlkey="jhensin.label.monthStart" />
+						<listheader width="50px"
+							sort="auto( MONTH_END )" mlkey="jhensin.label.monthEnd" />
+						<listheader width="50px"
+							sort="auto( INVALID_DATE )" mlkey="jhensin.label.invalidDate" />
+						<listheader width="50px"
+							sort="auto( CREATE_BY )" mlkey="baselib.col.creator" />
+						<listheader width="105px"
+							sort="auto( CREATE_DATE )" mlkey="baselib.col.createDate" />
+						<listheader width="50px"
+							sort="auto( MODIFY_BY )" mlkey="baselib.col.modifier" />
+						<listheader width="105px"
+							sort="auto( MODIFY_DATE )" mlkey="baselib.col.modifyDate" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell />
+							<listcell>
+								<textbox fld="SEASON_NO" upper="true"
+									requiredForBean="true" />
+							</listcell>
+							<listcell>
+								<textbox fld="SEASON_DESC" />
+							</listcell>
+							<listcell>
+								<spinner fld="MONTH_START"
+									constraint="no empty,min 1 max 12" />
+							</listcell>
+							<listcell>
+								<spinner fld="MONTH_END"
+									constraint="no empty,min 1 max 12" />
+							</listcell>
+							<listcell>
+								<datebox fld="INVALID_DATE" />
+							</listcell>
+							<listcell>
+								<userlabel fld="CREATE_BY" />
+							</listcell>
+							<listcell>
+								<label fld="CREATE_DATE" />
+							</listcell>
+							<listcell>
+								<userlabel fld="MODIFY_BY" />
+							</listcell>
+							<listcell>
+								<label fld="MODIFY_DATE" />
+							</listcell>
+						</listitem>
+					</template>
+				</elistbox>
+			</panelchildren>
+		</panel>
+	</div>
 </window>
