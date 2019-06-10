@@ -35,3 +35,24 @@
 6. 季度：固定大寫
 7. 加上一個 UK 管控： BRAND_ID + SEASON_NO
 8. 月份起迄兩欄，請用 spinner 元件，並加 constraint 控制只能輸入 1 ~ 12
+
+### 2019/06/10(作業10修正)
+1. brand_egrid.zul的部案
+    1. 主檔的 BRAND_NO 欄沒有固定大寫
+    2. 主檔的 BRAND_CODE 欄，可以加上 maxlength="2"
+    3. 明細的 SEASON_NO 欄，沒有管控只有新增才能編輯
+    4. 明細的月份兩欄，多了 no empty 的管控
+2. BrandEgridCotroller的檔案
+    1. 查詢的判斷邏輯有問題，當只有填一個查詢條件時，會查出全部的資料
+    2. 新增季度時，若輸入重複的代號，存檔時的提示訊息會含有 【BRAND_ID】=xxx(UUID 22 碼)，應設法去除
+    3. onBeforeDelete 中目前是取回 MapBeanResultList 來判斷筆數，可以改為 SQL 直接只取回筆數 (SELECT COUNT)，會比較有效率
+3. brand_elistbox.zul
+    1. 主明細各一半高度的排版，目前你的處理方式較不好，當資料多時，scrollbar 會是在 div 上，整個 panel 會被捲動
+    2. 查詢條件多了 constraint="no empty"，onQuery 也請記得一併調整正確
+    3. 明細的 SEASON_NO 欄，沒有管控只有新增才能編輯
+    4. 明細的月份兩欄，多了 no empty 的管控
+4. BrandElistboxController
+    1. 建議先全部 setActionHandler() 之後，才開始載入資料，若有其他元件設定之類的，最好也都在載資料前處理，以免有什麼問題
+    2. String QT，String FR，String BName，String BNo，名稱不符合命名原則
+    3. checkBrandCode()，若要將邏輯抽出成為一個 method，最好練習低耦合度的設計，目前檢查的資料是用傳入的(低耦合)，但 method 內卻與該欄位有高耦合的關係，這樣不好
+    4. onBeforeDelete 中目前是取回 MapBeanResultList 來判斷筆數，可以改為 SQL 直接只取回筆數 (SELECT COUNT)，會比較有效率

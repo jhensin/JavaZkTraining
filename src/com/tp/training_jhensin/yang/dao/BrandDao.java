@@ -21,18 +21,18 @@ public class BrandDao extends TrainingDBDAO {
 		return super.queryMapBeanResultList("SELECT * FROM " + this.getMainTableName() + " ORDER BY BRAND_NAME");
 	}
 
-	public MapBeanResultList queryNameNo(String BName,String BNo) throws SQLException {
+	public MapBeanResultList queryNameNo(String brandName,String brandNo) throws SQLException {
 		return super.queryMapBeanResultList(
 				"SELECT * FROM "+this.getMainTableName()+
-				" WHERE BRAND_NAME LIKE '%'|| ? ||'%' AND BRAND_NO LIKE '%'|| ? ||'%'" +
+				" WHERE BRAND_NAME LIKE '%'|| ? ||'%' AND ( ? IS NULL OR BRAND_NAME LIKE '%'||?||'%' )" +
 				" ORDER BY BRAND_NAME"
-				, BName, BNo);
+				, brandName, brandName, brandNo);
 	}
-	public MapBeanResultList queryNo(String BNo) throws SQLException {
+	public MapBeanResultList queryNo(String brandNo) throws SQLException {
 		return super.queryMapBeanResultList(
 				"SELECT * FROM "+this.getMainTableName()+
 				" WHERE BRAND_NO LIKE '%'|| ? ||'%'" +
 				" ORDER BY BRAND_NAME"
-				, BNo);
+				, brandNo);
 	}
 }

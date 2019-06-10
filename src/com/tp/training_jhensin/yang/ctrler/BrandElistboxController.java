@@ -31,11 +31,12 @@ public class BrandElistboxController extends TrainingBaseComposer {
 		super.doAfterCompose(comp);
 
 		this.masterLbox.setActionHandler(new MasterActionHandler());
+		this.seasonLbox.setActionHandler(new SeasonActionHandler());
 
 		MapBeanResultList data = TPDAOFactory.getWtBrandDAO().queryAll();
 		this.masterLbox.setModel(new ListModelList<>(data));
 
-		this.seasonLbox.setActionHandler(new SeasonActionHandler());
+
 		//this.seasonLbox.setModel(new ListModelList<>());
 	}
 
@@ -58,14 +59,14 @@ public class BrandElistboxController extends TrainingBaseComposer {
 			List<Listitem> items = elistbox.getSortedSelectedItems();
 			for(Listitem item : items){
 				MapBean bean = item.getBean();
-				String QT = bean.get("BRAND_CODE");
-				this.checkBrandCode(QT, item);
+				String columnValue = bean.get("BRAND_CODE");
+				this.checkBrandCode(columnValue, item, "BRAND_CODE");
 			}
 		}
 
-		public void checkBrandCode(String FR, Listitem item) {
-			if (!FR.matches("[A-Z0-9]{2}")) {
-				Component comp = item.getChildByFld("BRAND_CODE");
+		public void checkBrandCode(String columnValue, Listitem item, String columnName) {
+			if (!columnValue.matches("[A-Z0-9]{2}")) {
+				Component comp = item.getChildByFld(columnName);
 				throw new WrongValueException(comp,
 						Multilingual.getByUserLocale("jhensin.msg.checkInputboandcode", true, true));
 			}
@@ -78,9 +79,11 @@ public class BrandElistboxController extends TrainingBaseComposer {
 			List<Listitem> items = elistbox.getSortedSelectedItems();
 			for(Listitem item : items){
 				MapBean bean = item.getBean();
-				String QT = bean.get("BRAND_ID");
-				MapBeanResultList detailData = TPDAOFactory.getWtBrandSeasonDao().getBySeasonFkBrandNo(QT);
-				if(detailData.size() > 0) {
+				String masterId = bean.get("BRAND_ID");
+				MapBean count = TPDAOFactory.getWtBrandSeasonDao().getBySeasonFkBrandNoCount(masterId);
+				Object rows = count.get("ROW_NUM");
+				Integer rowNum = Integer.parseInt(rows.toString());
+				if(rowNum > 0) {
 					Msgbox.warn (Multilingual.getByUserLocale("jhensin.msg.hasDetailError", true, true));
 					this.stop();
 					return;
@@ -91,16 +94,17 @@ public class BrandElistboxController extends TrainingBaseComposer {
 
 	@Override
 	public boolean onQuery(MapBean bean) throws Exception{
-		String BName = bean.get("BRAND_NAME");
-		String BNo = bean.get("BRAND_NO");
-		System.out.println(BName);
-		System.out.println(BNo);
-		if(BName.isEmpty() || BNo.isEmpty()){
-			return false;
+		String brandName = bean.get("BRAND_NAME");
+		String brandNo = bean.get("BRAND_NO");
+		if (brandName.isEmpty() && brandNo.isEmpty()) {
+			MapBeanResultList data = TPDAOFactory.getWtBrandDAO().queryAll();
+			this.masterLbox.setModel(new ListModelList<>(data));
+			return true;
+		} else {
+			MapBeanResultList data = TPDAOFactory.getWtBrandDAO().queryNameNo(brandName, brandNo);
+			this.masterLbox.setModel(new ListModelList<>(data));
+			return true;
 		}
-		MapBeanResultList data = TPDAOFactory.getWtBrandDAO().queryNameNo(BName, BNo);
-		this.masterLbox.setModel(new ListModelList<>(data));
-		return true;
 	}
 
 	private class SeasonActionHandler extends TrainingGeneralElistboxActionHandler {
@@ -131,7 +135,6 @@ public class BrandElistboxController extends TrainingBaseComposer {
 		//this.masterGrid.setBean(bean); // 將資料帶入至右邊的 Egrid
 
 		String masterId = bean.get("BRAND_ID");
-		System.out.println(masterId);
 		MapBeanResultList detailData = TPDAOFactory.getWtBrandSeasonDao().getBySeasonFkBrandNo(masterId);
 		this.seasonLbox.setModel(new ListModelList<>(detailData));
 	}

@@ -49,7 +49,7 @@ public class BrandEgridCotroller extends TrainingBaseComposer {
 	public boolean onQuery(MapBean bean) throws Exception {
 		String brandName = bean.get("BRAND_NAME");
 		String brandNo = bean.get("BRAND_NO");
-		if (brandName.isEmpty() || brandNo.isEmpty()) {
+		if (brandName.isEmpty() && brandNo.isEmpty()) {
 			MapBeanResultList data = TPDAOFactory.getWtBrandDAO().queryAll();
 			this.indexLbox.setModel(new ListModelList<>(data));
 			return true;
@@ -98,9 +98,13 @@ public class BrandEgridCotroller extends TrainingBaseComposer {
 		@Override
 		public void onBeforeDelete (EditEvent event) throws Exception {
 			super.onBeforeDelete(event);
-			//System.out.print(BrandEgridCotroller.this.mainBrandID);
-			MapBeanResultList detailData = TPDAOFactory.getWtBrandSeasonDao().getBySeasonFkBrandNo(BrandEgridCotroller.this.mainBrandID);
-			if(detailData.size() > 0) {
+			Egrid grid = this.getEgrid();
+			MapBean bean = grid.getBean();
+			String masterId = bean.get("BRAND_ID");
+			MapBean count = TPDAOFactory.getWtBrandSeasonDao().getBySeasonFkBrandNoCount(masterId);
+			Object rows = count.get("ROW_NUM");
+			Integer rowNum = Integer.parseInt(rows.toString());
+			if(rowNum > 0) {
 				Msgbox.warn (Multilingual.getByUserLocale("jhensin.msg.hasDetailError", true, true));
 				this.stop();
 				return;
@@ -125,7 +129,7 @@ public class BrandEgridCotroller extends TrainingBaseComposer {
 
 		@Override
 		protected String[][] getUkColNames() {
-			return new String[][] { { "BRAND_ID","SEASON_NO" } };
+			return new String[][] { { "#BRAND_ID","SEASON_NO" } };
 		}
 	}
 }
