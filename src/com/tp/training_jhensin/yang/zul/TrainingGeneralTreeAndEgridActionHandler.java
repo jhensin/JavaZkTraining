@@ -11,4 +11,9 @@ public class TrainingGeneralTreeAndEgridActionHandler extends GeneralTreeAndEgri
 	public TrainingGeneralTreeAndEgridActionHandler(MapBeanDAO dao) {
 		super(dao);
 	}
+
+	@Override
+	protected String[][] getUkColNames(){
+		return new String[][] {{"BRAND_ID","STYLE_NO"}};
+	}
 }

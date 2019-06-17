@@ -56,3 +56,13 @@
     2. String QT，String FR，String BName，String BNo，名稱不符合命名原則
     3. checkBrandCode()，若要將邏輯抽出成為一個 method，最好練習低耦合度的設計，目前檢查的資料是用傳入的(低耦合)，但 method 內卻與該欄位有高耦合的關係，這樣不好
     4. onBeforeDelete 中目前是取回 MapBeanResultList 來判斷筆數，可以改為 SQL 直接只取回筆數 (SELECT COUNT)，會比較有效率
+
+### 2019/06/17(作業11完成)
+1. 新增style.zul,StyleTreeController.java,更改檔案名稱StyleDBDAO.java => StyleDAO.java
+2. Tree 索引：固定三層 品牌,季度+2碼年,款式代號
+3. Egrid 
+    1. 品牌、年度、季度、款式代號，這四欄只有新增時可編輯
+    2. 品牌下拉：資料來源為所有的品牌
+    3. 年度下拉：當前年及下一年
+    4. 季度下拉：資料來源為所選品牌的季度明細資料
+    5. 款式代號：固定大寫

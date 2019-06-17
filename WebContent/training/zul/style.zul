@@ -1,0 +1,170 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<window id="mainWin" width="100%" height="100%"
+	apply="com.tp.training_jhensin.yang.ctrler.StyleTreeController">
+	<borderlayout width="100%" height="100%">
+		<west size="150px" splittable="true" collapsible="true">
+			<vlayout width="100%" height="100%">
+				<div align="center" style="padding-top:5px;">
+					<basebutton id="queryBtn" mode="query" width="90%"
+						height="10px" />
+					<window id="queryWin" mlkey="baselib.btn.query"
+						visible="false" width="350px" height="190px">
+						<vlayout width="100%" height="100%">
+							<qgrid id="qgrid" vflex="1">
+								<columns>
+									<column width="30%" />
+									<column width="70%" />
+								</columns>
+								<rows>
+									<row>
+										<coltitle
+											mlkey="jhensin.label.brandNo" />
+										<combobox fld="BRAND_ID">
+											<template name="model">
+												<comboitem
+													label="${each.BRAND_NO}" description="${each.BRAND_NAME}"
+													value="${each.BRAND_ID}" />
+											</template>
+										</combobox>
+									</row>
+									<row>
+										<coltitle
+											mlkey="jhensin.label.styleNo" />
+										<textbox fld="STYLE_NO" />
+									</row>
+								</rows>
+							</qgrid>
+							<div align="center">
+								<basebutton id="cancelQueryBtn"
+									mode="cancel" />
+								<basebutton id="confirmQueryBtn"
+									mode="ok" />
+							</div>
+						</vlayout>
+					</window>
+					<tree id="indexTree" width="100%" height="100%">
+						<treecols>
+							<treecol
+								mlkey="jhensin.label.styleTreeStructure" />
+						</treecols>
+						<template name="model">
+							<treeitem>
+								<treerow>
+									<treecell>
+										<label fld="TREE_LABEL" />
+									</treecell>
+								</treerow>
+							</treeitem>
+						</template>
+					</tree>
+				</div>
+			</vlayout>
+		</west>
+		<center>
+			<div hflex="1" vflex="1" style="overflow-y:auto;">
+				<panel>
+					<caption>
+						<label mlkey="jhensin.label.style"
+							multiline="true" />
+						<editbuttons id="masterEbtns" btns="AMDSC">
+							<basebutton id="addChildBtn" mode="addChild"
+								statusFollow="${masterEbtns.modifyBtn}" />
+						</editbuttons>
+					</caption>
+					<panelchildren>
+						<egrid id="masterGrid"
+							boundBtns="${masterEbtns}" boundIndex="${indexTree}" vflex="1">
+							<columns>
+								<column width="10%" />
+								<column width="23%" />
+								<column width="10%" />
+								<column width="23%" />
+								<column width="10%" />
+								<column width="24%" />
+							</columns>
+							<rows>
+								<row>
+									<coltitle
+										mlkey="jhensin.label.brandNo" />
+									<combobox fld="BRAND_ID"
+										id="brandNoCombo" insertOnly="true" requiredForBean="true">
+										<template name="model">
+											<comboitem
+												label="${each.BRAND_NO}" description="${each.BRAND_NAME}"
+												value="${each.BRAND_ID}" />
+										</template>
+									</combobox>
+									<coltitle
+										mlkey="jhensin.label.year" />
+									<combobox fld="STYLE_YEAR"
+										id="styleYearCombo" insertOnly="true" requiredForBean="true">
+									</combobox>
+									<coltitle
+										mlkey="jhensin.label.seasonNo" />
+									<combobox fld="SEASON_NO"
+										id="seasonNoCombo" insertOnly="true" requiredForBean="true">
+										<template name="model">
+											<comboitem
+												label="${each.SEASON_NO}" description="${each.SEASON_DESC}"
+												value="${each.SEASON_NO}" />
+										</template>
+									</combobox>
+								</row>
+								<row>
+									<coltitle
+										mlkey="jhensin.label.styleNo" />
+									<textbox fld="STYLE_NO"
+										insertOnly="true" requiredForBean="true" upper="true" />
+									<coltitle
+										mlkey="jhensin.label.styleName" />
+									<textbox fld="STYLE_NAME"
+										requiredForBean="true" />
+									<coltitle
+										mlkey="jhensin.label.styleNameEn" />
+									<textbox fld="STYLE_NAME_EN" />
+								</row>
+								<row>
+									<coltitle
+										mlkey="jhensin.label.phase" />
+									<textbox fld="PHASE"
+										requiredForBean="true" />
+									<coltitle
+										mlkey="jhensin.label.styleGender" />
+									<radiogroup fld="STYLE_GENDER">
+										<radio value="M"
+											mlkey="jhensin.label.male" />
+										<radio value="F"
+											mlkey="jhensin.label.female" />
+									</radiogroup>
+									<coltitle
+										mlkey="jhensin.label.invalidDate" />
+									<datebox fld="INVALID_DATE"></datebox>
+								</row>
+								<row>
+									<coltitle
+										mlkey="baselib.col.creator" />
+									<userlabel fld="CREATE_BY" />
+									<coltitle
+										mlkey="baselib.col.createDate" />
+									<cell colspan="3">
+										<label fld="CREATE_DATE" />
+									</cell>
+								</row>
+								<row>
+									<coltitle
+										mlkey="baselib.col.modifier" />
+									<userlabel fld="MODIFY_BY" />
+									<coltitle
+										mlkey="baselib.col.modifyDate" />
+									<cell colspan="3">
+										<label fld="MODIFY_DATE" />
+									</cell>
+								</row>
+							</rows>
+						</egrid>
+					</panelchildren>
+				</panel>
+			</div>
+		</center>
+	</borderlayout>
+</window>

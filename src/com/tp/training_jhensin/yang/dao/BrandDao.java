@@ -35,4 +35,7 @@ public class BrandDao extends TrainingDBDAO {
 				" ORDER BY BRAND_NAME"
 				, brandNo);
 	}
+	public MapBeanResultList getBrandIdAndName() throws SQLException {
+		return super.queryMapBeanResultList("SELECT BRAND_ID, BRAND_NO, BRAND_NAME FROM " + this.getMainTableName());
+	}
 }

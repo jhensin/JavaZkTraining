@@ -22,4 +22,8 @@ public class BrandSeasonDAO extends TrainingDBDAO {
 	public MapBeanResultList queryAll() throws SQLException {
 		return super.queryMapBeanResultList("SELECT * FROM " + this.getMainTableName() + " ORDER BY SEASON_NO");
 	}
+
+	public MapBeanResultList getSeasonAndDescriptionByBrandId(String brandId) throws SQLException {
+		return super.queryMapBeanResultList("SELECT SEASON_NO, SEASON_DESC FROM " + this.getMainTableName() + " WHERE BRAND_ID=? ORDER BY SEASON_NO", brandId);
+	}
 }
